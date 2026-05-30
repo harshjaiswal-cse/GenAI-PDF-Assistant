@@ -199,11 +199,9 @@ def ask_question(query: str):
         query_embedding = query_model.encode(query)
 
         results = collection.query(
-            query_embeddings=[
-                query_embedding.tolist()
-            ],
-            n_results=10
-        )
+            query_texts=[query],
+               n_results=20
+)
 
         retrieved_docs = results["documents"][0]
         sources = results["metadatas"][0]
@@ -215,6 +213,9 @@ def ask_question(query: str):
             }
 
         context = "\n\n".join(retrieved_docs)
+        print("\n========== CONTEXT ==========\n")
+        print(context) 
+        print("\n=============================\n")
 
         prompt = f"""
 You are a professional RAG assistant.
